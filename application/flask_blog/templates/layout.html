@@ -5,9 +5,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet" type="text/css">
 <link rel=stylesheet href="{{ url_for('static', filename='style.css') }}">
-
 
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,14 +20,14 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if not current_user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('login') }}">ログイン</a>
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('new_entry') }}">新規投稿</a>
+                    <a class="nav-link" href="{{ url_for('new_entry') }}">New Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('logout') }}">ログアウト</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                 </li>
                 {% endif %}
             </ul>
