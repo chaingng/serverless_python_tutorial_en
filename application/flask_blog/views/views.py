@@ -8,12 +8,12 @@ from flask_blog.models.users import User
 def login():
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
-            flash('ユーザ名が異なります')
+            flash('User name is different')
         elif request.form['password'] != app.config['PASSWORD']:
-            flash('パスワードが異なります')
+            flash('Password is different')
         else:
             login_user(User("request.form['username']"))
-            flash('ログインしました')
+            flash('Login successful')
             return redirect(url_for('show_entries'))
     return render_template('login.html')
 
@@ -21,7 +21,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    flash('ログアウトしました')
+    flash('Logged Out')
     return redirect(url_for('login'))
 
 @app.errorhandler(404)

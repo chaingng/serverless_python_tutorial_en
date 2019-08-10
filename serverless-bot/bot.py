@@ -3,16 +3,15 @@ import gspread
 import boto3
 import pytz
 from oauth2client.service_account import ServiceAccountCredentials
-from slackclient import SlackClient
+from slack import WebClient
 import os
 import pdb
 
 
 def notify_to_slack(message, channel='#kpi'):
     slack_token = os.environ.get('SERVERLESS_SLACK_BOT_API_TOKEN')
-    sc = SlackClient(slack_token)
-    sc.api_call(
-        "chat.postMessage",
+    client = WebClient(slack_token)
+    client.chat_postMessage(
         channel=channel,
         as_user=True,
         text=message
@@ -26,7 +25,6 @@ def get_kpi():
         aws_secret_access_key=os.environ.get('SERVERLESS_AWS_SECRERT_KEY'),
         region_name='ap-northeast-1'
     )
-
     entry_num = client.describe_table(TableName='serverless_blog_entries')[
         'Table']['ItemCount']
     return entry_num
@@ -35,7 +33,7 @@ def get_kpi():
 def update_gas(today, entry_num):
     keyfile_path = 'serverless-gas-client-secret.json'
     scope = ['https://spreadsheets.google.com/feeds']
-    doc_id = '1Loagi0Bxr5OL4SdW_KkpKYtat4jIFYV-PTVU5o8cjZQ'
+    doc_id = '1adhMLLkA-BTIzFOmN3a1hU0PpcL4EXzMWvnPmY6mOUY'
 
     credentials = ServiceAccountCredentials.from_json_keyfile_name(
         keyfile_path, scope)
@@ -57,7 +55,7 @@ def run_bot():
     entry_num = get_kpi()
     update_gas(today, entry_num)
 
-    message = '{}\n記事数:{}\nhttps://docs.google.com/spreadsheets/d/1Loagi0Bxr5OL4SdW_KkpKYtat4jIFYV-PTVU5o8cjZQ'.format(
+    message = '{}\nNumber of articles:{}\nhttps://docs.google.com/spreadsheets/d/1adhMLLkA-BTIzFOmN3a1hU0PpcL4EXzMWvnPmY6mOUY'.format(
         today, entry_num)
     notify_to_slack(message)
 

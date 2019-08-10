@@ -21,4 +21,4 @@ setup_auth(app, login_manager)
 from flask_blog.views import views, entries
 from flask_blog.views.views import login
 login_manager.login_view = "login"
-login_manager.login_message = "ログインしてください"
+login_manager.login_message = "Login is needed"
